@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ShopSense Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<div class="navbar">
+
+    <h2>🛍 ShopSense</h2>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="vendors.html">Vendors</a>
+        <a href="products.html">Products</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="reports.html">Reports</a>
+        <a href="index.html">Logout</a>
+
+    </div>
+
+</div>
+
+<h1>📊 Admin Dashboard</h1>
+<nav class="navbar">
+
+    <a href="dashboard.html">Dashboard</a>
+
+    <a href="vendors.html">Vendors</a>
+
+    <a href="transactions.html">Transactions</a>
+
+    <a href="reports.html">Reports</a>
+
+    <button onclick="logout()" class="logout-btn">
+        Logout
+    </button>
+
+</nav>
+
+<h1>📊 ShopSense Admin Dashboard</h1>
+
+<div class="dashboard">
+
+    <div class="card">
+        <h2>Total Vendors</h2>
+        <p id="totalVendors">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Approved Vendors</h2>
+        <p id="approvedVendors">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Pending Vendors</h2>
+        <p id="pendingVendors">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Suspended Vendors</h2>
+        <p id="suspendedVendors">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Total Products</h2>
+        <p id="totalProducts">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Low Stock</h2>
+        <p id="lowStockProducts">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Total Orders</h2>
+        <p id="totalOrders">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Total Revenue</h2>
+        <p>₹<span id="totalRevenue">0</span></p>
+    </div>
+
+    <div class="card">
+        <h2>Best Selling Product</h2>
+        <p id="bestProduct">No Data</p>
+    </div>
+
+</div>
+
+<script src="js/dashboard.js"></script>
+<script src="js/logout.js"></script>
+</body>
+</html>

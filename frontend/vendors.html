@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<h1>Vendor Management</h1>
+<input
+    type="text"
+    id="searchVendor"
+    placeholder="Search by Owner, Business or Email"
+    onkeyup="searchVendor()">
+
+<table border="1" cellpadding="10">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Owner Name</th>
+            <th>Business Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Approve</th>
+            <th>Suspend</th>
+        </tr>
+    </thead>
+
+    <tbody id="vendorTable">
+    </tbody>
+</table>
+
+<script src="js/vendors.js"></script>
+
+</body>
+</html>

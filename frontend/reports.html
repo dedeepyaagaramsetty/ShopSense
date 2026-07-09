@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Marketplace Reports</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="vendors.html">Vendors</a>
+    <a href="transactions.html">Transactions</a>
+    <a href="reports.html">Reports</a>
+    <button onclick="logout()">Logout</button>
+</nav>
+
+<h1>📈 Marketplace Reports</h1>
+
+<div class="dashboard">
+
+    <div class="card">
+        <h2>Total Revenue</h2>
+        <p>₹<span id="revenue">0</span></p>
+    </div>
+
+    <div class="card">
+        <h2>Total Orders</h2>
+        <p id="orders">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Best Selling Product</h2>
+        <p id="bestProduct">No Data</p>
+    </div>
+
+</div>
+
+<script src="js/reports.js"></script>
+<script src="js/logout.js"></script>
+
+</body>
+</html>

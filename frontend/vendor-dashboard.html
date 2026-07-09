@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Vendor Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <h1>🏪 Vendor Dashboard</h1>
+
+    <div class="card">
+
+        <h2>Business Details</h2>
+
+        <table>
+
+            <tr>
+                <td><b>Vendor ID</b></td>
+                <td id="vendorId">Loading...</td>
+            </tr>
+
+            <tr>
+                <td><b>Owner Name</b></td>
+                <td id="ownerName">Loading...</td>
+            </tr>
+
+            <tr>
+                <td><b>Business Name</b></td>
+                <td id="businessName">Loading...</td>
+            </tr>
+
+            <tr>
+                <td><b>Email</b></td>
+                <td id="email">Loading...</td>
+            </tr>
+
+            <tr>
+                <td><b>Phone</b></td>
+                <td id="phone">Loading...</td>
+            </tr>
+
+            <tr>
+                <td><b>Status</b></td>
+                <td id="status">Loading...</td>
+            </tr>
+
+            <tr>
+                <td><b>Total Products</b></td>
+                <td id="products">0</td>
+            </tr>
+
+            <tr>
+                <td><b>Total Inventory</b></td>
+                <td id="inventory">0</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <hr>
+
+    <!-- Add Product Button -->
+    <button onclick="showForm()">
+        ➕ Add Product
+    </button>
+
+    <br><br>
+
+    <!-- Add Product Form -->
+    <div id="productForm" style="display:none;">
+
+        <div class="card">
+
+            <h2>Add Product</h2>
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="Product Name">
+
+            <br><br>
+
+            <input
+                type="text"
+                id="description"
+                placeholder="Description">
+
+            <br><br>
+
+            <input
+                type="number"
+                id="price"
+                placeholder="Price">
+
+            <br><br>
+
+            <input
+                type="number"
+                id="stock"
+                placeholder="Stock">
+
+            <br><br>
+
+            <input
+                type="number"
+                id="categoryId"
+                placeholder="Category">
+
+            <br><br>
+
+            <button onclick="addProduct()">
+                💾 Save Product
+            </button>
+
+            <button type="button" onclick="cancelProductForm()">
+                ❌ Cancel
+            </button>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <h2>My Products</h2>
+
+    <table border="1" cellpadding="10">
+
+        <thead>
+
+            <tr>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Price (₹)</th>
+                <th>Stock</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody id="myProducts">
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <button class="logout-btn" onclick="logout()">
+        Logout
+    </button>
+
+    <script src="js/vendor-dashboard.js"></script>
+
+</body>
+
+</html>
