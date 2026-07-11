@@ -56,3 +56,43 @@ def get_transactions(db: Session = Depends(get_db)):
             })
 
     return data
+@router.get("/vendor/{vendor_id}")
+def get_vendor_transactions(vendor_id: int, db: Session = Depends(get_db)):
+
+    data = []
+
+    orders = db.query(Order).all()
+
+    for order in orders:
+
+        customer = db.query(Customer).filter(
+            Customer.id == order.customer_id
+        ).first()
+
+        items = db.query(OrderItem).filter(
+            OrderItem.order_id == order.id
+        ).all()
+
+        for item in items:
+
+            product = db.query(Product).filter(
+                Product.id == item.product_id
+            ).first()
+
+            if product.vendor_id != vendor_id:
+                continue
+
+            vendor = db.query(Vendor).filter(
+                Vendor.id == vendor_id
+            ).first()
+
+            data.append({
+                "order_id": order.id,
+                "customer": customer.full_name,
+                "product": product.name,
+                "quantity": item.quantity,
+                "amount": item.price * item.quantity,
+                "status": order.status
+            })
+
+    return data

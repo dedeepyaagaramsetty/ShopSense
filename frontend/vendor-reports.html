@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Reports</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+    <a href="vendor-dashboard.html">🏠 Dashboard</a>
+    <a href="vendor-transactions.html">💰 Transactions</a>
+    <a href="vendor-reports.html" class="active">📊 Reports</a>
+    <a href="vendor-inventory.html">📦 Inventory</a>
+
+    <button class="logout-btn" onclick="logout()">
+        Logout
+    </button>
+</div>
+
+
+
+<h1>📊 Vendor Reports</h1>
+
+<div class="card">
+    <h2>Total Revenue</h2>
+    <h3 id="revenue">₹0</h3>
+</div>
+
+<div class="card">
+    <h2>Products Sold</h2>
+    <h3 id="productsSold">0</h3>
+</div>
+
+<div class="card">
+    <h2>Completed Orders</h2>
+    <h3 id="completedOrders">0</h3>
+</div>
+
+<div class="card">
+    <h2>Pending Orders</h2>
+    <h3 id="pendingOrders">0</h3>
+</div>
+
+<br>
+
+
+
+<script src="js/vendor-reports.js"></script>
+<script src="js/logout.js"></script>
+
+</body>
+</html>

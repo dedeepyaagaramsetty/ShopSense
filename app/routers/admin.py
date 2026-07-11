@@ -104,9 +104,20 @@ def suspend_vendor(vendor_id: int, db: Session = Depends(get_db)):
 @router.get("/reports")
 def marketplace_report(db: Session = Depends(get_db)):
 
-    total_revenue = db.query(func.sum(Order.total_amount)).scalar() or 0
+    total_revenue = db.query(
+        func.sum(Order.total_amount)
+    ).filter(
+        Order.status == "Completed"
+    ).scalar() or 0
 
     total_orders = db.query(Order).count()
+    completed_orders = db.query(Order).filter(
+         Order.status == "Completed"
+    ).count()
+
+    pending_orders = db.query(Order).filter(
+        Order.status == "Pending"
+    ).count()
 
     total_products = db.query(Product).count()
 
@@ -132,12 +143,13 @@ def marketplace_report(db: Session = Depends(get_db)):
     )
 
     return {
-        "total_revenue": total_revenue,
-        "total_orders": total_orders,
-        "total_products": total_products,
-        "total_vendors": total_vendors,
-        "approved_vendors": approved_vendors,
-        "pending_vendors": pending_vendors,
-        "best_selling_product":
-            best_product.name if best_product else "No Data"
-    }
+    "total_revenue": total_revenue,
+    "total_orders": total_orders,
+    "completed_orders": completed_orders,
+    "pending_orders": pending_orders,
+    "total_products": total_products,
+    "total_vendors": total_vendors,
+    "approved_vendors": approved_vendors,
+    "pending_vendors": pending_vendors,
+    "best_selling_product": best_product.name if best_product else "No Data"
+}

@@ -1,20 +1,19 @@
-fetch("http://127.0.0.1:8000/admin/reports")
+const vendorId = localStorage.getItem("vendorId");
+
+fetch(`http://127.0.0.1:8000/vendors/${vendorId}/reports`)
 .then(response => response.json())
 .then(data => {
 
     document.getElementById("revenue").innerText =
-        data.total_revenue;
+        "₹" + data.total_revenue;
 
-    document.getElementById("orders").innerText =
-        data.total_orders;
+    document.getElementById("productsSold").innerText =
+        data.products_sold;
 
-    document.getElementById("bestProduct").innerText =
-        data.best_selling_product;
     document.getElementById("completedOrders").innerText =
         data.completed_orders;
 
     document.getElementById("pendingOrders").innerText =
         data.pending_orders;
 
-})
-.catch(error => console.log(error));
+});

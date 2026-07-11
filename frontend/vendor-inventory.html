@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Inventory</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+    <a href="vendor-dashboard.html">🏠 Dashboard</a>
+    <a href="vendor-transactions.html">💰 Transactions</a>
+    <a href="vendor-reports.html">📊 Reports</a>
+    <a href="vendor-inventory.html" class="active">📦 Inventory</a>
+
+    <button class="logout-btn" onclick="logout()">
+        Logout
+    </button>
+</div>
+
+
+
+<h1>📦 Inventory</h1>
+
+<div class="card">
+    <h3>Total Products</h3>
+    <h2 id="totalProducts">0</h2>
+</div>
+
+<div class="card">
+    <h3>Total Stock</h3>
+    <h2 id="totalStock">0</h2>
+</div>
+
+<div class="card">
+    <h3>Total Inventory Value</h3>
+    <h2 id="inventoryValue">₹0</h2>
+</div>
+
+<hr>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+
+        <tr>
+            <th>Product</th>
+            <th>Price (₹)</th>
+            <th>Stock</th>
+            <th>Inventory Value (₹)</th>
+        </tr>
+
+    </thead>
+
+    <tbody id="inventoryTable">
+
+    </tbody>
+
+</table>
+
+<br>
+
+
+
+<script src="js/vendor-inventory.js"></script>
+<script src="js/logout.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vendor Transactions</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="navbar">
+    <a href="vendor-dashboard.html">🏠 Dashboard</a>
+    <a href="vendor-transactions.html" class="active">💰 Transactions</a>
+    <a href="vendor-reports.html">📊 Reports</a>
+    <a href="vendor-inventory.html">📦 Inventory</a>
+
+    <button class="logout-btn" onclick="logout()">
+        Logout
+    </button>
+</div>
+
+
+
+<h1>💰 Vendor Transactions</h1>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Amount (₹)</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody id="transactionTable">
+
+    </tbody>
+
+</table>
+
+<br>
+
+
+
+<script src="js/vendor-transactions.js"></script>
+<script src="js/logout.js"></script>
+
+</body>
+
+</html>
