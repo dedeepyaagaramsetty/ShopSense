@@ -4,8 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
-
-    <title>Customer Dashboard</title>
+    <title>ShopSense</title>
 
     <link rel="stylesheet" href="css/style.css">
 
@@ -13,43 +12,111 @@
 
 <body>
 
-<h1>🛍 Customer Dashboard</h1>
+<h1>🛒 ShopSense</h1>
 
-<div class="dashboard">
+<div class="navbar">
 
-    <div class="card">
+    <button>🏠 Home</button>
 
-        <h2>Welcome to ShopSense</h2>
+    <button onclick="window.location.href='customer-orders.html'">
+        📦 My Orders
+    </button>
 
-        <p>
-            Customer module will be expanded in Milestone 2.
-        </p>
+    <button onclick="window.location.href='customer-wishlist.html'">
+        ❤️ Wishlist
+    </button>
 
-    </div>
+    <button onclick="window.location.href='customer-profile.html'">
+        👤 Profile
+    </button>
+    <button onclick="logout()">
+        🚪 Logout
+    </button>
 
-    <div class="card">
+</div>
+<hr>
 
-        <h2>Current Status</h2>
+<div class="card">
 
-        <p>Customer Portal Ready</p>
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="🔍 Search Products..."
+        onkeyup="filterProducts()">
+
+    <br><br>
+
+    <label><b>Category:</b></label>
+
+    <select id="categoryFilter" onchange="filterProducts()">
+
+        <option value="All">All</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Mobiles">Mobiles</option>
+        <option value="Laptops">Laptops</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Grocery">Grocery</option>
+
+    </select>
+
+    &nbsp;&nbsp;&nbsp;
+
+    <label><b>Sort By:</b></label>
+
+    <select id="sortFilter" onchange="filterProducts()">
+
+        <option value="default">Default</option>
+        <option value="low">Price: Low → High</option>
+        <option value="high">Price: High → Low</option>
+
+    </select>
+
+</div>
+
+<br>
+<br>
+
+<div class="card">
+
+    <h2>
+        Welcome,
+        <span id="customerName">
+            Loading...
+        </span>
+        👋
+    </h2>
+
+    <p>Email :
+        <span id="customerEmail"></span>
+    </p>
+
+    <p>Total Orders :
+        <span id="totalOrders"></span>
+    </p>
+
+</div>
+<br>
+
+<div class="card">
+
+    <h2>⭐ Recommended For You</h2>
+
+    <div id="recommendationContainer">
 
     </div>
 
 </div>
 
-<button onclick="logout()">
-    Logout
-</button>
+<br>
+<br>
 
-<script>
 
-function logout(){
 
-    window.location.href = "index.html";
+<div id="productsContainer">
 
-}
+</div>
 
-</script>
+<script src="js/customer-dashboard.js"></script>
 
 </body>
 

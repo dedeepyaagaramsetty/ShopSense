@@ -153,3 +153,45 @@ def marketplace_report(db: Session = Depends(get_db)):
     "pending_vendors": pending_vendors,
     "best_selling_product": best_product.name if best_product else "No Data"
 }
+@router.get("/analytics")
+def admin_analytics(db: Session = Depends(get_db)):
+
+    total_customers = db.query(Customer).count()
+
+    total_vendors = db.query(Vendor).count()
+
+    total_products = db.query(Product).count()
+
+    total_orders = db.query(Order).count()
+
+    completed_orders = db.query(Order).filter(
+        Order.status == "Completed"
+    ).count()
+
+    pending_orders = db.query(Order).filter(
+        Order.status == "Pending"
+    ).count()
+
+    total_revenue = db.query(
+        func.sum(Order.total_amount)
+    ).filter(
+        Order.status == "Completed"
+    ).scalar() or 0
+
+    return {
+
+        "total_customers": total_customers,
+
+        "total_vendors": total_vendors,
+
+        "total_products": total_products,
+
+        "total_orders": total_orders,
+
+        "completed_orders": completed_orders,
+
+        "pending_orders": pending_orders,
+
+        "total_revenue": total_revenue
+
+    }

@@ -316,3 +316,193 @@ tr:hover{
 .navbar .logout-btn:hover {
     background: #c62828;
 }
+/* ==========================
+   Dashboard Summary Cards
+========================== */
+
+.summary-container{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    margin:20px 0;
+}
+
+.summary-card{
+    flex:1;
+    min-width:220px;
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+}
+
+.summary-card h3{
+    color:#555;
+    margin-bottom:10px;
+}
+
+.summary-card h2{
+    color:#1565c0;
+    font-size:30px;
+    margin:0;
+}
+/* Product Grid */
+
+#productsContainer{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+    justify-content:center;
+
+}
+
+/* Individual Product Card */
+
+.product-card{
+
+    width:240px;
+
+    background:white;
+
+    border-radius:12px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,0.15);
+
+    padding:20px;
+
+    text-align:center;
+
+    transition:0.3s;
+
+}
+
+.product-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+
+}
+
+.product-icon{
+
+    font-size:55px;
+
+    margin-bottom:10px;
+
+}
+
+.product-card h3{
+
+    margin:10px 0;
+
+}
+
+.product-card p{
+
+    color:#666;
+
+}
+
+.product-card button{
+
+    width:100%;
+
+    margin-top:10px;
+
+}
+/* Recommendation Section */
+
+#recommendationContainer{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:20px;
+
+    justify-content:center;
+
+    margin-top:20px;
+
+}
+/* ===========================
+   Charts
+=========================== */
+
+.chart-card{
+
+    width:80%;
+
+    max-width:700px;
+
+    margin:20px auto;
+
+    padding:20px;
+
+}
+
+.chart-card canvas{
+
+    width:100% !important;
+
+    height:320px !important;
+
+}
+#forecastTable td{
+
+    font-size:15px;
+
+}
+
+#forecastTable tr:hover{
+
+    background:#f5f9ff;
+
+}
+/* Forecast Charts */
+
+.chart-card{
+
+    width: 700px;
+
+    max-width: 90%;
+
+    margin: 20px auto;
+
+    height: 360px;
+
+}
+
+.chart-card canvas{
+
+    width:100% !important;
+
+    height:280px !important;
+
+}
+.summary-card{
+
+    border-left:6px solid #1976d2;
+
+}
+
+.summary-card h2{
+
+    font-size:32px;
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-5px);
+
+    transition:.3s;
+
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Forecast</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<h1>📈 Inventory Forecast</h1>
+
+<!-- Navigation -->
+
+<div class="navbar">
+
+    <button onclick="window.location.href='vendor-dashboard.html'">
+        🏠 Dashboard
+    </button>
+
+    <button onclick="window.location.href='vendor-transactions.html'">
+        💰 Transactions
+    </button>
+
+    <button onclick="window.location.href='vendor-reports.html'">
+        📊 Reports
+    </button>
+
+    <button onclick="window.location.href='vendor-inventory.html'">
+        📦 Inventory
+    </button>
+
+    <button onclick="window.location.href='vendor-forecast.html'">
+        📈 Forecast
+    </button>
+    <button class="logout-btn" onclick="logout()">
+        Logout
+    </button>
+
+</div>
+
+<br>
+
+<!-- Summary Cards -->
+
+<div class="summary-container">
+
+    <div class="summary-card">
+        <h3>📦 Total Products</h3>
+        <h2 id="totalProducts">0</h2>
+    </div>
+
+    <div class="summary-card">
+        <h3>📈 Units Sold</h3>
+        <h2 id="unitsSold">0</h2>
+    </div>
+
+    <div class="summary-card">
+        <h3>⚠ Restock Needed</h3>
+        <h2 id="restockProducts">0</h2>
+    </div>
+
+    <div class="summary-card">
+        <h3>🎯 Forecast Accuracy</h3>
+        <h2 id="forecastAccuracy">82%</h2>
+    </div>
+
+</div>
+<div class="card">
+
+    <h2>📋 Forecast Summary</h2>
+
+    <p id="forecastSummary">
+        Loading forecast...
+    </p>
+
+</div>
+
+<br>
+<br>
+
+<!-- Forecast Table -->
+
+<div class="card">
+
+<h2>Inventory Forecast</h2>
+
+<table border="1" cellpadding="10">
+
+<thead>
+
+<tr>
+
+<th>Product</th>
+<th>Current Stock</th>
+<th>Units Sold</th>
+<th>Average / Day</th>
+<th>Forecast (7 Days)</th>
+<th>Restock</th>
+
+</tr>
+
+</thead>
+
+<tbody id="forecastTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+<br><br>
+
+<!-- Stock Chart -->
+
+<div class="card chart-card">
+
+<h2>Current Stock vs Forecast</h2>
+
+<canvas id="stockChart"></canvas>
+
+</div>
+
+<br>
+
+<!-- Sales Chart -->
+
+<div class="card chart-card">
+
+<h2>Units Sold (Last 30 Days)</h2>
+
+<canvas id="salesChart"></canvas>
+
+</div>
+
+<script src="js/vendor-forecast.js"></script>
+
+</body>
+
+</html>
+<div class="card">
+
+<h2>💡 Forecast Information</h2>
+
+<p>
+
+• Forecast is calculated using the last 30 days of sales.<br><br>
+
+• Average daily sales are projected for the next 7 days.<br><br>
+
+• Products with forecast demand greater than current stock are marked for restocking.
+
+</p>
+
+</div>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<h1>📦 My Orders</h1>
+
+<div class="navbar">
+
+    <button onclick="window.location.href='customer-dashboard.html'">
+        🏠 Home
+    </button>
+
+    <button onclick="window.location.href='customer-orders.html'">
+        📦 My Orders
+    </button>
+
+    <button onclick="window.location.href='customer-wishlist.html'">
+    ❤️ Wishlist
+</button>
+
+<button onclick="window.location.href='customer-profile.html'">
+    👤 Profile
+</button>
+
+    <button onclick="logout()">
+        🚪 Logout
+    </button>
+
+</div>
+
+<br>
+
+<table border="1" cellpadding="10">
+
+<thead>
+
+<tr>
+
+<th>Order ID</th>
+<th>Product</th>
+<th>Quantity</th>
+<th>Amount (₹)</th>
+<th>Status</th>
+<th>Date</th>
+
+</tr>
+
+</thead>
+
+<tbody id="ordersTable">
+
+</tbody>
+
+</table>
+
+<script src="js/customer-orders.js"></script>
+
+</body>
+
+</html>

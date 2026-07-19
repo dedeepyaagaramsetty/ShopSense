@@ -1,5 +1,6 @@
 from app.database.database import SessionLocal
-
+from datetime import datetime, timedelta
+import random
 from app.models.vendor import Vendor
 from app.models.category import Category
 from app.models.product import Product
@@ -105,33 +106,56 @@ for p in products:
 db.commit()
 
 # -------------------------
-# Orders
+# Orders (Historical Data)
 # -------------------------
+
 customers = db.query(Customer).all()
+products = db.query(Product).all()
 
-if db.query(Order).count() <= 1:
+if db.query(Order).count() == 0:
 
-    order1 = Order(customer_id=customers[0].id, total_amount=79999, status="Completed")
-    order2 = Order(customer_id=customers[1].id, total_amount=65000, status="Completed")
-    order3 = Order(customer_id=customers[2].id, total_amount=1499, status="Pending")
+    for i in range(30):
 
-    db.add_all([order1, order2, order3])
+        customer = random.choice(customers)
+
+        product = random.choice(products)
+
+        quantity = random.randint(1, 3)
+
+        total_amount = product.price * quantity
+
+        status = random.choice([
+            "Completed",
+            "Completed",
+            "Completed",
+            "Pending"
+        ])
+
+        order_date = datetime.now() - timedelta(
+            days=random.randint(0, 30)
+        )
+
+        order = Order(
+            customer_id=customer.id,
+            total_amount=total_amount,
+            status=status,
+            order_date=order_date
+        )
+
+        db.add(order)
+        db.commit()
+        db.refresh(order)
+
+        order_item = OrderItem(
+            order_id=order.id,
+            product_id=product.id,
+            quantity=quantity,
+            price=product.price
+        )
+
+        db.add(order_item)
+
     db.commit()
-
-    db.refresh(order1)
-    db.refresh(order2)
-    db.refresh(order3)
-
-    products = db.query(Product).all()
-
-    db.add_all([
-        OrderItem(order_id=order1.id, product_id=products[0].id, quantity=1, price=79999),
-        OrderItem(order_id=order2.id, product_id=products[1].id, quantity=1, price=65000),
-        OrderItem(order_id=order3.id, product_id=products[4].id, quantity=1, price=1499)
-    ])
-
-    db.commit()
-
 db.close()
 
 print("Sample data inserted successfully!")

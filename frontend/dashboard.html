@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>ShopSense Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -30,6 +31,10 @@
 <h1>📊 ShopSense Admin Dashboard</h1>
 
 <div class="dashboard">
+    <div class="card">
+    <h2>Total Customers</h2>
+    <p id="totalCustomers">0</p>
+</div>
 
     <div class="card">
         <h2>Total Vendors</h2>
@@ -75,6 +80,25 @@
         <h2>Best Selling Product</h2>
         <p id="bestProduct">No Data</p>
     </div>
+
+</div>
+<br><br>
+
+<div class="card chart-card">
+
+    <h2>📊 Dashboard Analytics</h2>
+
+    <canvas id="analyticsChart"></canvas>
+
+</div>
+
+<br>
+
+<div class="card chart-card">
+
+    <h2>📈 Orders vs Revenue</h2>
+
+    <canvas id="ordersChart"></canvas>
 
 </div>
 

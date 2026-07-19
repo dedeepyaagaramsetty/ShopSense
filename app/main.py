@@ -14,7 +14,8 @@ from app.models.category import Category
 from app.models.product import Product
 from app.models.order import Order
 from app.models.order_item import OrderItem
-
+from app.routers.customer import router as customer_router
+from app.models.wishlist import Wishlist
 # Create all database tables
 Base.metadata.create_all(bind=engine)
 
@@ -35,6 +36,7 @@ app.include_router(vendor_router)
 app.include_router(admin_router)
 app.include_router(product_router)
 app.include_router(category_router)
+app.include_router(customer_router)
 @app.get("/")
 def home():
     return {

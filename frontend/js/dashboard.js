@@ -34,3 +34,117 @@ fetch("http://127.0.0.1:8000/admin/reports")
 
 })
 .catch(error => console.log(error));
+// ============================
+// Analytics
+// ============================
+
+fetch("http://127.0.0.1:8000/admin/analytics")
+.then(response => response.json())
+.then(data => {
+
+    document.getElementById("totalCustomers").innerText =
+    data.total_customers;
+
+    new Chart(
+
+    document.getElementById("analyticsChart"),
+
+    {
+
+        type: "bar",
+
+        data: {
+
+            labels: [
+
+                "Customers",
+
+                "Vendors",
+
+                "Products"
+
+            ],
+
+            datasets: [
+
+                {
+
+                    label: "Total Count",
+
+                    data: [
+
+                        data.total_customers,
+
+                        data.total_vendors,
+
+                        data.total_products
+
+                    ]
+
+                }
+
+            ]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false
+
+        }
+
+    }
+
+);
+
+    new Chart(
+
+    document.getElementById("ordersChart"),
+
+    {
+
+        type: "pie",
+
+        data: {
+
+            labels: [
+
+                "Completed",
+
+                "Pending"
+
+            ],
+
+            datasets: [
+
+                {
+
+                    data: [
+
+                        data.completed_orders,
+
+                        data.pending_orders
+
+                    ]
+
+                }
+
+            ]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            maintainAspectRatio:false
+
+        }
+
+    }
+
+);
+
+});
