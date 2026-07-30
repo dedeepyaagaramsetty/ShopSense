@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Model Registry</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <a href="dashboard.html">🏠 Dashboard</a>
+
+    <a href="reports.html">📊 Reports</a>
+
+    <a href="vendor-benchmark.html">🏆 Benchmark</a>
+
+    <a href="model-registry.html">🤖 Model Registry</a>
+
+    <a href="index.html">🚪 Logout</a>
+
+</div>
+
+<h1>🤖 ML Model Registry</h1>
+
+<div class="dashboard">
+
+<div class="card">
+
+<h2>Model</h2>
+
+<p id="modelName"></p>
+
+</div>
+
+<div class="card">
+
+<h2>Algorithm</h2>
+
+<p id="algorithm"></p>
+
+</div>
+
+<div class="card">
+
+<h2>Accuracy</h2>
+
+<p id="accuracy"></p>
+
+</div>
+
+<div class="card">
+
+<h2>Status</h2>
+
+<p id="status"></p>
+
+</div>
+
+<div class="card">
+
+<h2>Version</h2>
+
+<p id="version"></p>
+
+</div>
+
+<div class="card">
+
+<h2>Dataset</h2>
+
+<p id="dataset"></p>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card chart-card">
+
+<h2>Forecast Accuracy</h2>
+
+<canvas id="accuracyChart"></canvas>
+
+</div>
+
+<br>
+
+<div class="card chart-card">
+
+<h2>Pipeline Completion</h2>
+
+<canvas id="pipelineChart"></canvas>
+
+</div>
+
+</body>
+
+<script src="js/model-registry.js"></script>
+
+</html>

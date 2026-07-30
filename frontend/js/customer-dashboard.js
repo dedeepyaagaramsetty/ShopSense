@@ -3,43 +3,117 @@ const customerId = localStorage.getItem("customerId");
 loadDashboard();
 loadProducts();
 loadRecommendations();
-function loadDashboard(){
+function loadDashboard() {
 
     fetch(`http://127.0.0.1:8000/customers/${customerId}/dashboard`)
-
     .then(response => response.json())
-
-    .then(data=>{
+    .then(data => {
         
 
+document.getElementById("customerName").innerText = data.full_name;
         document.getElementById("customerName").innerText =
-        data.full_name;
+            data.full_name;
 
         document.getElementById("customerEmail").innerText =
-        data.email;
+            data.email;
 
         document.getElementById("totalOrders").innerText =
-        data.total_orders;
+            data.total_orders;
+
+        document.getElementById("completedOrders").innerText =
+            data.completed_orders;
+
+        document.getElementById("pendingOrders").innerText =
+            data.pending_orders;
+
+        document.getElementById("totalSpent").innerText =
+            "₹" + data.total_spent;
+
+        document.getElementById("averageSpent").innerText =
+            "₹" + data.average_spent;
+        console.log("Dashboard values assigned successfully");
+
+
+        // ======================
+        // Order Status Chart
+        // ======================
+
+        new Chart(
+            document.getElementById("customerOrdersChart"),
+            {
+                type: "pie",
+
+                data: {
+                    labels: [
+                        "Completed",
+                        "Pending"
+                    ],
+
+                    datasets: [{
+                        data: [
+                            data.completed_orders,
+                            data.pending_orders
+                        ]
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            }
+        );
+
+
+        // ======================
+        // Spending Chart
+        // ======================
+
+        new Chart(
+            document.getElementById("customerSpendChart"),
+            {
+                type: "bar",
+
+                data: {
+                    labels: [
+                        "Total Spent",
+                        "Average Order"
+                    ],
+
+                    datasets: [{
+                        label: "Amount (₹)",
+
+                        data: [
+                            data.total_spent,
+                            data.average_spent
+                        ]
+                    }]
+                },
+
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            }
+        );
 
     });
 
 }
-
 let allProducts = [];
 
-function loadProducts(){
+function loadProducts() {
 
     fetch("http://127.0.0.1:8000/products/")
-
-    .then(response=>response.json())
-
-    .then(products=>{
+    .then(response => response.json())
+    .then(products => {
 
         allProducts = products;
 
         displayProducts(products);
 
-    });
+    })
+    .catch(error => console.log(error));
 
 }
 
@@ -69,10 +143,9 @@ function displayProducts(products){
 
     <p>Stock: ${product.stock}</p>
 
-    <button onclick="buyNow(${product.id})">
-        🛒 Buy
+    <button onclick='showBuyPopup(${product.id}, ${JSON.stringify(product.name)}, ${product.price})'>
+        🛒 Buy Now
     </button>
-
     <button onclick="addToWishlist(${product.id})">
         ❤️ Wishlist
     </button>
@@ -80,6 +153,8 @@ function displayProducts(products){
 </div>
 
 `;
+
+
 
     });
 
@@ -185,43 +260,55 @@ else if(category === "Grocery"){
     displayProducts(filtered);
 
 }
+let selectedProductId = null;
 
-function buyNow(productId){
+function showBuyPopup(productId,name,price){
+    console.log("Popup Opened");
 
-    fetch(`http://127.0.0.1:8000/customers/${customerId}/buy/${productId}`, {
 
-        method: "POST"
+    selectedProductId = productId;
+
+    document.getElementById("popupProduct").innerText =
+        "Product : " + name;
+
+    document.getElementById("popupPrice").innerText =
+        "Price : ₹" + price;
+
+    document.getElementById("buyPopup").style.display="flex";
+
+}
+function confirmPurchase(){
+
+    fetch(`http://127.0.0.1:8000/customers/${customerId}/buy/${selectedProductId}`,{
+
+        method:"POST"
 
     })
 
-    .then(async response => {
+    .then(response=>response.json())
 
-        const data = await response.json();
-
-        if(!response.ok){
-            throw new Error(data.detail);
-        }
-
-        return data;
-
-    })
-
-    .then(data => {
+    .then(data=>{
 
         alert(data.message);
 
-        // Reload products so updated stock is shown
+        closePopup();
+
+        loadDashboard();
+
         loadProducts();
 
-    })
-
-    .catch(error => {
-
-        alert(error.message);
+        loadRecommendations();
 
     });
 
 }
+function closePopup(){
+
+    document.getElementById("buyPopup").style.display="none";
+
+}
+
+
 
 function logout(){
 
@@ -315,10 +402,9 @@ function loadRecommendations(){
 
     <h2>₹${product.price}</h2>
 
-    <button onclick="buyNow(${product.id})">
-        🛒 Buy Now
-    </button>
-
+   <button onclick="showBuyPopup(${product.id}, '${product.name}', ${product.price})">
+    🛒 Buy Now
+</button>
 </div>
 
 `;

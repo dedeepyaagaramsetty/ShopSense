@@ -14,6 +14,7 @@ from app.models.customer import Customer
 from app.schemas.customer import CustomerLogin
 from app.models.order import Order
 from app.models.customer import Customer
+from sqlalchemy import func
 from app.schemas.customer import (
     CustomerCreate,
     CustomerLogin,
@@ -129,17 +130,44 @@ def customer_dashboard(customer_id: int, db: Session = Depends(get_db)):
             detail="Customer not found"
         )
 
-    orders = db.query(Order).filter(
+    # Total Orders
+    total_orders = db.query(Order).filter(
         Order.customer_id == customer_id
     ).count()
 
+    # Completed Orders
+    completed_orders = db.query(Order).filter(
+        Order.customer_id == customer_id,
+        Order.status == "Completed"
+    ).count()
+
+    # Pending Orders
+    pending_orders = db.query(Order).filter(
+        Order.customer_id == customer_id,
+        Order.status == "Pending"
+    ).count()
+
+    # Total Amount Spent
+    total_spent = db.query(
+        func.sum(Order.total_amount)
+    ).filter(
+        Order.customer_id == customer_id,
+        Order.status == "Completed"
+    ).scalar() or 0
+
+    # Average Order Value
+    average_spent = round(
+        total_spent / completed_orders, 2
+    ) if completed_orders else 0
+
     return {
-        "customer_id": customer.id,
         "full_name": customer.full_name,
         "email": customer.email,
-        "phone": customer.phone,
-        "address": customer.address,
-        "total_orders": orders
+        "total_orders": total_orders,
+        "completed_orders": completed_orders,
+        "pending_orders": pending_orders,
+        "total_spent": total_spent,
+        "average_spent": average_spent
     }
 @router.post("/{customer_id}/buy/{product_id}")
 def buy_product(
@@ -366,11 +394,10 @@ def recommend_products(
         )
 
         recommendations = db.query(Product).filter(
-
-            Product.category_id == favourite_category,
-
-            Product.id.notin_(purchased_products)
-
+            Product.category_id == favourite_category
         ).limit(6).all()
+
+        if len(recommendations) == 0:
+            recommendations = db.query(Product).limit(6).all()
 
     return recommendations

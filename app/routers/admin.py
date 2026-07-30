@@ -180,18 +180,30 @@ def admin_analytics(db: Session = Depends(get_db)):
 
     return {
 
-        "total_customers": total_customers,
+    "total_customers": total_customers,
 
-        "total_vendors": total_vendors,
+    "total_vendors": total_vendors,
 
-        "total_products": total_products,
+    "total_products": total_products,
 
-        "total_orders": total_orders,
+    "total_orders": total_orders,
 
-        "completed_orders": completed_orders,
+    "completed_orders": completed_orders,
 
-        "pending_orders": pending_orders,
+    "pending_orders": pending_orders,
 
-        "total_revenue": total_revenue
+    "total_revenue": total_revenue,
 
-    }
+    "approved_vendors": db.query(Vendor).filter(
+        Vendor.status == "Approved"
+    ).count(),
+
+    "pending_vendors": db.query(Vendor).filter(
+        Vendor.status == "Pending"
+    ).count(),
+
+    "suspended_vendors": db.query(Vendor).filter(
+        Vendor.status == "Suspended"
+    ).count()
+
+}

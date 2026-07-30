@@ -127,26 +127,89 @@ def vendor_dashboard(vendor_id: int, db: Session = Depends(get_db)):
             detail="Vendor not found"
         )
 
-    total_products = db.query(Product).filter(
+    # Products
+    products = db.query(Product).filter(
         Product.vendor_id == vendor_id
-    ).count()
+    ).all()
 
-    total_inventory = db.query(
-        func.sum(Product.stock)
-    ).filter(
-        Product.vendor_id == vendor_id
-    ).scalar() or 0
+    total_products = len(products)
+
+    total_inventory = sum(
+        product.stock
+        for product in products
+    )
+
+    inventory_value = sum(
+        product.stock * product.price
+        for product in products
+    )
+
+    product_ids = [product.id for product in products]
+
+    total_revenue = 0
+    completed_orders = 0
+    best_product = "No Data"
+
+    if product_ids:
+
+        order_items = db.query(OrderItem).filter(
+            OrderItem.product_id.in_(product_ids)
+        ).all()
+
+        total_revenue = sum(
+            item.price * item.quantity
+            for item in order_items
+        )
+
+        completed_orders = len(order_items)
+
+        sales = {}
+
+        for item in order_items:
+
+            sales[item.product_id] = sales.get(item.product_id, 0) + item.quantity
+
+        if sales:
+
+            best_product_id = max(
+                sales,
+                key=sales.get
+            )
+
+            product = db.query(Product).filter(
+                Product.id == best_product_id
+            ).first()
+
+            if product:
+                best_product = product.name
 
     return {
-    "vendor_id": vendor.id,
-    "owner_name": vendor.owner_name,
-    "business_name": vendor.business_name,
-    "email": vendor.email,
-    "phone": vendor.phone,
-    "status": vendor.status,
-    "total_products": total_products,
-    "total_inventory": total_inventory
-}
+
+        "vendor_id": vendor.id,
+
+        "owner_name": vendor.owner_name,
+
+        "business_name": vendor.business_name,
+
+        "email": vendor.email,
+
+        "phone": vendor.phone,
+
+        "status": vendor.status,
+
+        "total_products": total_products,
+
+        "total_inventory": total_inventory,
+
+        "inventory_value": inventory_value,
+
+        "total_revenue": total_revenue,
+
+        "completed_orders": completed_orders,
+
+        "best_product": best_product
+
+    }
 @router.get("/{vendor_id}/reports")
 def vendor_reports(vendor_id: int, db: Session = Depends(get_db)):
 

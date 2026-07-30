@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Marketplace Reports</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h2>🛍 ShopSense</h2>
+
+    <div class="nav-links">
+
+        <a href="dashboard.html">Dashboard</a>
+        <a href="vendors.html">Vendors</a>
+        <a href="products.html">Products</a>
+        <a href="transactions.html">Transactions</a>
+        <a href="reports.html">Reports</a>
+        <a href="vendor-benchmark.html">Benchmark</a>
+        <a href="index.html">Logout</a>
+
+    </div>
+
+</div>
+
+<h1>🏆 Vendor Benchmark Dashboard</h1>
+
+<!-- Summary Cards -->
+
+<div class="dashboard">
+
+    <div class="card">
+        <h2>🥇 Top Vendor</h2>
+        <p id="topVendor">Loading...</p>
+    </div>
+
+    <div class="card">
+        <h2>💰 Highest Revenue</h2>
+        <p>₹<span id="highestRevenue">0</span></p>
+    </div>
+
+    <div class="card">
+        <h2>📦 Completed Orders</h2>
+        <p id="topOrders">0</p>
+    </div>
+
+    <div class="card">
+        <h2>💵 Avg Order Value</h2>
+        <p>₹<span id="topAverage">0</span></p>
+    </div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<h2>Vendor Leaderboard</h2>
+
+<table border="1" cellpadding="10">
+
+<thead>
+
+<tr>
+
+<th>Rank</th>
+<th>Vendor</th>
+<th>Revenue</th>
+<th>Completed Orders</th>
+<th>Average Order Value</th>
+
+</tr>
+
+</thead>
+
+<tbody id="leaderboard">
+
+</tbody>
+
+</table>
+
+</div>
+
+<br><br>
+
+<div class="card chart-card">
+
+<h2>Revenue Comparison</h2>
+
+<canvas id="benchmarkChart"></canvas>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="js/vendor-benchmark.js"></script>
+
+</body>
+</html>

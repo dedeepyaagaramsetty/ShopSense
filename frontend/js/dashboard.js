@@ -4,17 +4,17 @@ fetch("http://127.0.0.1:8000/admin/dashboard")
 .then(response => response.json())
 .then(data => {
 
-    document.getElementById("totalVendors").innerText = data.total_vendors;
+    animateValue("totalVendors",data.total_vendors);
 
-    document.getElementById("approvedVendors").innerText = data.approved_vendors;
+    animateValue("approvedVendors",data.approved_vendors);
 
-    document.getElementById("pendingVendors").innerText = data.pending_vendors;
+    animateValue("pendingVendors",data.pending_vendors);
 
-    document.getElementById("suspendedVendors").innerText = data.suspended_vendors;
+    animateValue("suspendedVendors", data.suspended_vendors);
 
-    document.getElementById("totalProducts").innerText = data.total_products;
+    animateValue("totalProducts", data.total_products);
 
-    document.getElementById("lowStockProducts").innerText = data.low_stock_products;
+    animateValue("lowStockProducts",data.low_stock_products);
 
 })
 .catch(error => console.log(error));
@@ -26,11 +26,11 @@ fetch("http://127.0.0.1:8000/admin/reports")
 .then(response => response.json())
 .then(data => {
 
-    document.getElementById("totalOrders").innerText = data.total_orders;
+    animateValue("totalOrders",data.total_orders);
 
-    document.getElementById("totalRevenue").innerText = data.total_revenue;
+    animateValue("totalRevenue",data.total_revenue);
 
-    document.getElementById("bestProduct").innerText = data.best_selling_product;
+    animateValue("bestProduct",data.best_selling_product);
 
 })
 .catch(error => console.log(error));
@@ -147,4 +147,36 @@ fetch("http://127.0.0.1:8000/admin/analytics")
 
 );
 
+
 });
+function animateValue(id,end){
+
+    let start=0;
+
+    const duration=1000;
+
+    const increment=end/50;
+
+    const obj=document.getElementById(id);
+
+    const timer=setInterval(()=>{
+
+        start+=increment;
+
+        if(start>=end){
+
+            obj.innerText=end;
+
+            clearInterval(timer);
+
+        }
+
+        else{
+
+            obj.innerText=Math.floor(start);
+
+        }
+
+    },duration/50);
+
+}

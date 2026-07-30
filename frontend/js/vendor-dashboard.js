@@ -1,3 +1,4 @@
+console.log("HELLO FROM VENDOR DASHBOARD");
 const vendorId = localStorage.getItem("vendorId");
 
 // Load Dashboard Details
@@ -14,6 +15,86 @@ fetch(`http://127.0.0.1:8000/vendors/${vendorId}/dashboard`)
     document.getElementById("status").innerText = data.status;
     document.getElementById("products").innerText = data.total_products;
     document.getElementById("inventory").innerText = data.total_inventory;
+    document.getElementById("vendorRevenue").innerText =
+    "₹" + data.total_revenue;
+
+document.getElementById("vendorOrders").innerText =
+    data.completed_orders;
+
+document.getElementById("bestProduct").innerText =
+    data.best_product;
+
+document.getElementById("inventoryValue").innerText =
+    "₹" + data.inventory_value;
+document.getElementById("inventoryValue").innerText =
+"₹" + data.inventory_value;
+
+
+// ====================
+// Sales Chart
+// ====================
+
+new Chart(document.getElementById("salesChart"),{
+
+    type:"line",
+
+    data:{
+        labels:["Jan","Feb","Mar","Apr","May","Jun"],
+
+        datasets:[{
+            label:"Revenue",
+
+            data:[
+                120000,
+                180000,
+                250000,
+                320000,
+                450000,
+                data.total_revenue
+            ],
+
+            borderWidth:2,
+            fill:false
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false
+    }
+
+});
+
+
+// ====================
+// Inventory Chart
+// ====================
+
+new Chart(document.getElementById("inventoryChart"),{
+
+    type:"doughnut",
+
+    data:{
+        labels:["Inventory","Completed Orders"],
+
+        datasets:[{
+
+            data:[
+                data.total_inventory,
+                data.completed_orders
+            ]
+
+        }]
+    },
+
+    options:{
+        responsive:true,
+        maintainAspectRatio:false
+    }
+
+});
+
+
 
 });
 

@@ -12,18 +12,29 @@
 </head>
 
 <body>
-    <div class="navbar">
-    <a href="vendor-dashboard.html" class="active">🏠 Dashboard</a>
-    <a href="vendor-transactions.html">💰 Transactions</a>
-    <a href="vendor-reports.html">📊 Reports</a>
-    <a href="vendor-inventory.html">📦 Inventory</a>
-    <button onclick="window.location.href='vendor-forecast.html'">
-    📈 Forecast
-</button>
-    <button class="logout-btn" onclick="logout()">
-        Logout
-    </button>
+    <div class="sidebar">
+
+<h2>🏪 Vendor</h2>
+
+<a class="active" href="vendor-dashboard.html">🏠 Dashboard</a>
+
+<a href="vendor-transactions.html">💰 Transactions</a>
+
+<a href="vendor-reports.html">📊 Reports</a>
+
+<a href="vendor-inventory.html">📦 Inventory</a>
+
+<a href="vendor-forecast.html">📈 Forecast</a>
+
+<a href="profile.html">👤 Profile</a>
+
+<a href="settings.html">⚙ Settings</a>
+
+<a href="index.html">🚪 Logout</a>
+
 </div>
+
+<div class="main-content">
 
     <h1>🏪 Vendor Dashboard</h1>
 
@@ -78,6 +89,54 @@
     </div>
 
     <hr>
+    <h2>📊 Business Summary</h2>
+
+<div class="dashboard">
+
+    <div class="card">
+        <h2>💰 Total Revenue</h2>
+        <p id="vendorRevenue">₹0</p>
+    </div>
+
+    <div class="card">
+        <h2>🛒 Completed Orders</h2>
+        <p id="vendorOrders">0</p>
+    </div>
+
+    <div class="card">
+        <h2>⭐ Best Selling Product</h2>
+        <p id="bestProduct">-</p>
+    </div>
+
+    <div class="card">
+        <h2>📦 Inventory Value</h2>
+        <p id="inventoryValue">₹0</p>
+    </div>
+
+</div>
+
+<br>
+<div class="charts-row">
+
+    <div class="card chart-card">
+
+        <h2>📈 Monthly Sales</h2>
+
+        <canvas id="salesChart"></canvas>
+
+    </div>
+
+    <div class="card chart-card">
+
+        <h2>📦 Inventory Status</h2>
+
+        <canvas id="inventoryChart"></canvas>
+
+    </div>
+
+</div>
+
+<br>
 
     <!-- Add Product Button -->
     <button onclick="showForm()">
@@ -166,8 +225,10 @@
 
     <br>
     
-
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/vendor-dashboard.js"></script>
+    
 
 </body>
 

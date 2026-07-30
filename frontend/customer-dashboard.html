@@ -14,26 +14,27 @@
 
 <h1>🛒 ShopSense</h1>
 
-<div class="navbar">
+<div class="sidebar">
 
-    <button>🏠 Home</button>
+    <h2>🛒 Customer</h2>
 
-    <button onclick="window.location.href='customer-orders.html'">
-        📦 My Orders
-    </button>
+    <a class="active" href="customer-dashboard.html">🏠 Dashboard</a>
 
-    <button onclick="window.location.href='customer-wishlist.html'">
-        ❤️ Wishlist
-    </button>
+    <a href="products.html">🛍 Browse Products</a>
 
-    <button onclick="window.location.href='customer-profile.html'">
-        👤 Profile
-    </button>
-    <button onclick="logout()">
-        🚪 Logout
-    </button>
+    <a href="customer-orders.html">📦 My Orders</a>
+
+    <a href="customer-wishlist.html">❤️ Wishlist</a>
+
+    <a href="customer-profile.html">👤 Profile</a>
+
+    <a href="settings.html">⚙ Settings</a>
+
+    <a href="index.html">🚪 Logout</a>
 
 </div>
+
+<div class="main-content">
 <hr>
 
 <div class="card">
@@ -97,6 +98,51 @@
 </div>
 <br>
 
+<h2>📊 My Shopping Analytics</h2>
+
+<div class="dashboard">
+
+    <div class="card">
+        <h2>Total Spent</h2>
+        <p id="totalSpent">₹0</p>
+    </div>
+
+    <div class="card">
+        <h2>Average Order</h2>
+        <p id="averageSpent">₹0</p>
+    </div>
+
+    <div class="card">
+        <h2>Completed Orders</h2>
+        <p id="completedOrders">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Pending Orders</h2>
+        <p id="pendingOrders">0</p>
+    </div>
+
+</div>
+
+<br>
+
+<div class="charts-row">
+
+    <div class="card chart-card">
+        <h2>Order Status</h2>
+        <canvas id="customerOrdersChart"></canvas>
+    </div>
+
+    <div class="card chart-card">
+        <h2>Spending Overview</h2>
+        <canvas id="customerSpendChart"></canvas>
+    </div>
+
+</div>
+
+<br>
+<br>
+
 <div class="card">
 
     <h2>⭐ Recommended For You</h2>
@@ -113,6 +159,32 @@
 
 
 <div id="productsContainer">
+
+</div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div id="buyPopup" class="popup">
+
+    <div class="popup-content">
+
+        <h2>Confirm Purchase</h2>
+
+        <p id="popupProduct"></p>
+
+        <p id="popupPrice"></p>
+
+        <br>
+
+        <button onclick="confirmPurchase()">
+            ✅ Confirm Purchase
+        </button>
+
+        <button onclick="closePopup()">
+            ⏳ Keep for Later
+        </button>
+
+    </div>
 
 </div>
 

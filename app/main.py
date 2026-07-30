@@ -16,6 +16,7 @@ from app.models.order import Order
 from app.models.order_item import OrderItem
 from app.routers.customer import router as customer_router
 from app.models.wishlist import Wishlist
+from app.routers.analytics import router as analytics_router
 # Create all database tables
 Base.metadata.create_all(bind=engine)
 
@@ -31,6 +32,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(analytics_router)
 app.include_router(transaction_router)
 app.include_router(vendor_router)
 app.include_router(admin_router)

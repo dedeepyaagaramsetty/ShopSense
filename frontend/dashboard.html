@@ -8,20 +8,37 @@
 </head>
 
 <body>
-<div class="navbar">
+<div class="sidebar">
 
     <h2>🛍 ShopSense</h2>
 
-    <div class="nav-links">
+    <a class="active" href="dashboard.html">🏠 Dashboard</a>
 
-        <a href="dashboard.html">Dashboard</a>
-        <a href="vendors.html">Vendors</a>
-        <a href="products.html">Products</a>
-        <a href="transactions.html">Transactions</a>
-        <a href="reports.html">Reports</a>
-        <a href="index.html">Logout</a>
+    <a href="vendors.html">👥 Vendors</a>
 
-    </div>
+    <a href="products.html">📦 Products</a>
+
+    <a href="transactions.html">💰 Transactions</a>
+
+    <a href="reports.html">📊 Reports</a>
+
+    <a href="vendor-benchmark.html">🏆 Benchmark</a>
+
+    <a href="profile.html">👤 Profile</a>
+
+    <a href="settings.html">⚙ Settings</a>
+
+    <a href="index.html">🚪 Logout</a>
+
+</div>
+<div class="main-content">
+    <div class="card" style="margin-bottom:25px;">
+
+<h2>👋 Welcome to ShopSense Analytics Platform</h2>
+
+<p style="font-size:18px; margin-top:10px; color:#2c3e50;">
+Monitor vendors, products, orders and business performance in real time.
+</p>
 
 </div>
 
@@ -41,12 +58,12 @@
         <p id="totalVendors">0</p>
     </div>
 
-    <div class="card">
+    <div class="card" >
         <h2>Approved Vendors</h2>
         <p id="approvedVendors">0</p>
     </div>
 
-    <div class="card">
+    <div class="card" >
         <h2>Pending Vendors</h2>
         <p id="pendingVendors">0</p>
     </div>
@@ -76,7 +93,7 @@
         <p>₹<span id="totalRevenue">0</span></p>
     </div>
 
-    <div class="card">
+    <div class="card" >
         <h2>Best Selling Product</h2>
         <p id="bestProduct">No Data</p>
     </div>
@@ -84,24 +101,21 @@
 </div>
 <br><br>
 
-<div class="card chart-card">
+<div class="charts-row">
 
+<div class="card chart-card">
     <h2>📊 Dashboard Analytics</h2>
-
     <canvas id="analyticsChart"></canvas>
-
 </div>
-
-<br>
 
 <div class="card chart-card">
-
     <h2>📈 Orders vs Revenue</h2>
-
     <canvas id="ordersChart"></canvas>
+</div>
 
 </div>
 
+</div>
 <script src="js/dashboard.js"></script>
 <script src="js/logout.js"></script>
 </body>

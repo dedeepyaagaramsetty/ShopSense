@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Business Intelligence Dashboard</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+<a href="dashboard.html">Dashboard</a>
+<a href="vendors.html">Vendors</a>
+<a href="products.html">Products</a>
+<a href="transactions.html">Transactions</a>
+<a href="reports.html">Reports</a>
+<a href="vendor-benchmark.html">Benchmark</a>
+<a href="bi-dashboard.html">BI Dashboard</a>
+<a href="index.html">Logout</a>
+
+</div>
+
+<h1>📊 Business Intelligence Dashboard</h1>
+
+<div class="summary-container">
+
+<div class="summary-card">
+<h3>Total Revenue</h3>
+<h2 id="revenue">0</h2>
+</div>
+
+<div class="summary-card">
+<h3>Completed Orders</h3>
+<h2 id="orders">0</h2>
+</div>
+
+<div class="summary-card">
+<h3>GMV</h3>
+<h2 id="gmv">0</h2>
+</div>
+
+<div class="summary-card">
+<h3>Growth</h3>
+<h2 id="growth">0%</h2>
+</div>
+
+</div>
+
+<br>
+
+<div class="card chart-card">
+
+<h2>Revenue Analysis</h2>
+
+<canvas id="revenueChart"></canvas>
+
+</div>
+
+<br>
+
+<div class="card chart-card">
+
+<h2>Marketplace Overview</h2>
+
+<canvas id="marketChart"></canvas>
+
+</div>
+
+<br>
+
+<button onclick="window.print()">
+
+📄 Export Report
+
+</button>
+
+<script src="js/bi-dashboard.js"></script>
+
+</body>
+
+</html>
