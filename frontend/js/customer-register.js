@@ -21,7 +21,7 @@ function registerCustomer() {
 
     }
 
-    fetch("http://127.0.0.1:8000/customers/register",{
+    fetch("http://localhost:8000/customers/register",{
 
         method:"POST",
 

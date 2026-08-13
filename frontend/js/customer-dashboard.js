@@ -3,9 +3,10 @@ const customerId = localStorage.getItem("customerId");
 loadDashboard();
 loadProducts();
 loadRecommendations();
+loadNotifications();
 function loadDashboard() {
 
-    fetch(`http://127.0.0.1:8000/customers/${customerId}/dashboard`)
+    fetch(`http://localhost:8000/customers/${customerId}/dashboard`)
     .then(response => response.json())
     .then(data => {
         
@@ -104,7 +105,7 @@ let allProducts = [];
 
 function loadProducts() {
 
-    fetch("http://127.0.0.1:8000/products/")
+    fetch("http://localhost:8000/products/")
     .then(response => response.json())
     .then(products => {
 
@@ -279,17 +280,83 @@ function showBuyPopup(productId,name,price){
 }
 function confirmPurchase(){
 
-    fetch(`http://127.0.0.1:8000/customers/${customerId}/buy/${selectedProductId}`,{
+    const address = prompt(
+        "Enter delivery address:",
+        ""
+    );
 
-        method:"POST"
+    if(!address){
+        alert("Address is required.");
+        return;
+    }
+
+    const paymentMethod = prompt(
+        "Choose payment method:\n\nEnter UPI to continue:"
+    );
+
+    if(!paymentMethod){
+        return;
+    }
+
+    if(paymentMethod.toUpperCase() !== "UPI"){
+
+        alert("Currently only UPI payment is available.");
+
+        return;
+    }
+
+    // Dummy UPI payment
+    alert("💳 UPI Payment Successful!");
+
+    fetch(
+        `http://localhost:8000/customers/${customerId}/buy/${selectedProductId}`,
+        {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+
+                quantity: 1,
+
+                address: address,
+
+                payment_method: "UPI"
+
+            })
+
+        }
+    )
+
+    .then(async response => {
+
+        const data = await response.json();
+
+        if(!response.ok){
+
+            throw new Error(
+                data.detail || "Purchase failed"
+            );
+
+        }
+
+        return data;
 
     })
 
-    .then(response=>response.json())
+    .then(data => {
 
-    .then(data=>{
-
-        alert(data.message);
+        alert(
+            "✅ Payment Successful!\n\n" +
+            "📦 Order placed successfully!\n\n" +
+            "Product: " + data.product +
+            "\nQuantity: " + data.quantity +
+            "\nAmount: ₹" + data.amount +
+            "\nPayment: " + data.payment_method
+        );
 
         closePopup();
 
@@ -298,6 +365,12 @@ function confirmPurchase(){
         loadProducts();
 
         loadRecommendations();
+
+    })
+
+    .catch(error => {
+
+        alert("❌ " + error.message);
 
     });
 
@@ -319,7 +392,7 @@ function logout(){
 }
 function addToWishlist(productId){
 
-    fetch(`http://127.0.0.1:8000/customers/${customerId}/wishlist/${productId}`,{
+    fetch(`http://localhost:8000/customers/${customerId}/wishlist/${productId}`,{
 
         method:"POST"
 
@@ -354,7 +427,7 @@ function addToWishlist(productId){
 }
 function loadRecommendations(){
 
-    fetch(`http://127.0.0.1:8000/customers/${customerId}/recommendations`)
+    fetch(`http://localhost:8000/customers/${customerId}/recommendations`)
 
     .then(response => response.json())
 
@@ -412,5 +485,85 @@ function loadRecommendations(){
         });
 
     });
+
+}
+function loadNotifications(){
+
+    fetch(
+        `http://localhost:8000/notifications/customer/${customerId}`
+    )
+
+    .then(response => response.json())
+
+    .then(notifications => {
+
+        const list =
+            document.getElementById("notificationList");
+
+        const count =
+            document.getElementById("notificationCount");
+
+        count.innerText = notifications.length;
+
+        list.innerHTML = "";
+
+        if(notifications.length === 0){
+
+            list.innerHTML =
+                "<p>No notifications</p>";
+
+            return;
+        }
+
+        notifications.forEach(notification => {
+
+            list.innerHTML += `
+
+                <div class="notification-item">
+
+                    <p>
+                        ${notification.message}
+                    </p>
+
+                    <small>
+                        ${notification.created_at}
+                    </small>
+
+                </div>
+
+            `;
+
+        });
+
+    })
+
+    .catch(error => {
+
+        console.error(
+            "Notification error:",
+            error
+        );
+
+    });
+}
+
+
+function toggleNotifications(){
+
+    const panel =
+        document.getElementById(
+            "notificationPanel"
+        );
+
+    if(panel.style.display === "block"){
+
+        panel.style.display = "none";
+
+    }
+    else{
+
+        panel.style.display = "block";
+
+    }
 
 }

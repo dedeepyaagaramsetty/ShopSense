@@ -20,7 +20,7 @@ function registerVendor() {
         return;
     }
 
-    fetch("http://127.0.0.1:8000/vendors/register", {
+    fetch("http://localhost:8000/vendors/register", {
 
         method: "POST",
 

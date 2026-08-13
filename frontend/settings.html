@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>ShopSense - Settings</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<h1>🛒 ShopSense</h1>
+
+
+<div class="sidebar" id="sidebar">
+
+    <h2>⚙ Settings</h2>
+
+    <a href="#" id="dashboardLink">
+        🏠 Dashboard
+    </a>
+
+    <a href="#" id="profileLink">
+        👤 Profile
+    </a>
+
+    <a class="active" href="settings.html">
+        ⚙ Settings
+    </a>
+
+    <a href="#" onclick="logout()">
+        🚪 Logout
+    </a>
+
+</div>
+
+
+<div class="main-content">
+
+    <div class="card">
+
+        <h2>⚙ Settings</h2>
+
+        <div id="message"></div>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <h3>🔔 Notifications</h3>
+
+        <label>
+
+            <input
+                type="checkbox"
+                id="orderNotifications"
+                checked
+            >
+
+            Order notifications
+
+        </label>
+
+        <br><br>
+
+        <label>
+
+            <input
+                type="checkbox"
+                id="paymentNotifications"
+                checked
+            >
+
+            Payment notifications
+
+        </label>
+
+        <br><br>
+
+        <label>
+
+            <input
+                type="checkbox"
+                id="deliveryNotifications"
+                checked
+            >
+
+            Delivery notifications
+
+        </label>
+
+
+        <hr>
+
+
+        <!-- APPEARANCE -->
+
+        <h3>🎨 Appearance</h3>
+
+        <label>
+
+            Theme:
+
+            <select id="themeSelect">
+
+                <option value="light">
+                    Light
+                </option>
+
+                <option value="dark">
+                    Dark
+                </option>
+
+            </select>
+
+        </label>
+
+
+        <br><br>
+
+        <button onclick="saveSettings()">
+            💾 Save Settings
+        </button>
+
+
+        <hr>
+
+
+        <!-- SECURITY -->
+
+        <h3>🔐 Security</h3>
+
+        <button onclick="showPasswordForm()">
+            🔑 Change Password
+        </button>
+
+
+        <div
+            id="passwordForm"
+            style="display:none; margin-top:20px;"
+        >
+
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="New Password"
+            >
+
+            <br><br>
+
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm Password"
+            >
+
+            <br><br>
+
+            <button onclick="changePassword()">
+                🔐 Update Password
+            </button>
+
+            <button onclick="hidePasswordForm()">
+                Cancel
+            </button>
+
+        </div>
+
+
+        <hr>
+
+
+        <!-- ACCOUNT -->
+
+        <h3>🚪 Account</h3>
+
+        <button onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="js/settings.js"></script>
+
+</body>
+
+</html>

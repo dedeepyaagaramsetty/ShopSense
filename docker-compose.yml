@@ -1,0 +1,34 @@
+services:
+
+  db:
+    image: postgres:16
+    container_name: shopsense-db
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "06290727"
+      POSTGRES_DB: shopsense_db
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - shopsense_postgres_data:/var/lib/postgresql/data
+
+
+  app:
+    build: .
+    container_name: shopsense-app
+
+    depends_on:
+      - db
+
+    environment:
+      DATABASE_URL: postgresql://postgres:06290727@db:5432/shopsense_db
+
+    ports:
+      - "8000:8000"
+
+
+volumes:
+  shopsense_postgres_data:

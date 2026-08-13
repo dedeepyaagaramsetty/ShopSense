@@ -1,6 +1,6 @@
 const customerId = localStorage.getItem("customerId");
 
-fetch(`http://127.0.0.1:8000/customers/${customerId}/wishlist`)
+fetch(`http://localhost:8000/customers/${customerId}/wishlist`)
 .then(response => response.json())
 .then(products => {
 

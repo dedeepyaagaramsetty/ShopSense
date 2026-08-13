@@ -12,6 +12,8 @@ venv/
 
 # Database (ignore only if you don't want to upload your SQLite DB)
 *.db
+# MLflow
+mlruns/
 
 # OS Files
 .DS_Store

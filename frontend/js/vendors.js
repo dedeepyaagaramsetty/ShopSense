@@ -1,4 +1,4 @@
-fetch("http://127.0.0.1:8000/admin/vendors")
+fetch("http://localhost:8000/admin/vendors")
 .then(response => response.json())
 .then(vendors => {
 
@@ -41,7 +41,7 @@ fetch("http://127.0.0.1:8000/admin/vendors")
 
 function approveVendor(id) {
 
-    fetch(`http://127.0.0.1:8000/admin/vendors/${id}/approve`, {
+    fetch(`http://localhost:8000/admin/vendors/${id}/approve`, {
         method: "PUT"
     })
     .then(() => {
@@ -53,7 +53,7 @@ function approveVendor(id) {
 
 function suspendVendor(id) {
 
-    fetch(`http://127.0.0.1:8000/admin/vendors/${id}/suspend`, {
+    fetch(`http://localhost:8000/admin/vendors/${id}/suspend`, {
         method: "PUT"
     })
     .then(() => {

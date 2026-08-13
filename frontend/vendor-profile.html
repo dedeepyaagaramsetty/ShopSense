@@ -2,13 +2,10 @@
 <html>
 
 <head>
-
     <meta charset="UTF-8">
-
-    <title>ShopSense - Customer Profile</title>
+    <title>ShopSense - Vendor Profile</title>
 
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
 <body>
@@ -17,25 +14,21 @@
 
 <div class="sidebar">
 
-    <h2>🛒 Customer</h2>
+    <h2>🏪 Vendor</h2>
 
-    <a href="customer-dashboard.html">
+    <a href="vendor-dashboard.html">
         🏠 Dashboard
     </a>
 
-    <a href="products.html">
-        🛍 Browse Products
+    <a href="vendor-products.html">
+        📦 My Products
     </a>
 
-    <a href="customer-orders.html">
-        📦 My Orders
+    <a href="vendor-transactions.html">
+        💰 Transactions
     </a>
 
-    <a href="customer-wishlist.html">
-        ❤️ Wishlist
-    </a>
-
-    <a class="active" href="customer-profile.html">
+    <a class="active" href="vendor-profile.html">
         👤 Profile
     </a>
 
@@ -54,18 +47,22 @@
 
     <div class="card">
 
-        <h2>👤 My Profile</h2>
+        <h2>👤 Vendor Profile</h2>
 
         <div id="message"></div>
-
 
         <!-- VIEW MODE -->
 
         <div id="profileView">
 
             <p>
-                <b>Full Name:</b>
-                <span id="name">Loading...</span>
+                <b>Owner Name:</b>
+                <span id="ownerName">Loading...</span>
+            </p>
+
+            <p>
+                <b>Business Name:</b>
+                <span id="businessName">Loading...</span>
             </p>
 
             <p>
@@ -79,13 +76,8 @@
             </p>
 
             <p>
-                <b>Address:</b>
-                <span id="address">Loading...</span>
-            </p>
-
-            <p>
-                <b>Joined:</b>
-                <span id="joined">Loading...</span>
+                <b>Status:</b>
+                <span id="status">Loading...</span>
             </p>
 
             <br>
@@ -102,13 +94,26 @@
         <div id="profileEdit" style="display:none;">
 
             <label>
-                <b>Full Name</b>
+                <b>Owner Name</b>
             </label>
 
             <input
                 type="text"
-                id="editName"
-                placeholder="Enter your name"
+                id="editOwnerName"
+                placeholder="Enter owner name"
+            >
+
+            <br><br>
+
+
+            <label>
+                <b>Business Name</b>
+            </label>
+
+            <input
+                type="text"
+                id="editBusinessName"
+                placeholder="Enter business name"
             >
 
             <br><br>
@@ -121,7 +126,7 @@
             <input
                 type="email"
                 id="editEmail"
-                placeholder="Enter your email"
+                placeholder="Enter email"
             >
 
             <br><br>
@@ -139,19 +144,16 @@
 
             <br><br>
 
+            <p>
+                <b>Status:</b>
+                <span id="editStatus"></span>
+            </p>
 
-            <label>
-                <b>Address</b>
-            </label>
-
-            <textarea
-                id="editAddress"
-                placeholder="Enter delivery address"
-                rows="4"
-            ></textarea>
+            <small>
+                Vendor account status can only be changed by Admin.
+            </small>
 
             <br><br>
-
 
             <button onclick="saveProfile()">
                 💾 Save Changes
@@ -168,7 +170,7 @@
 </div>
 
 
-<script src="js/customer-profile.js"></script>
+<script src="js/vendor-profile.js"></script>
 
 </body>
 

@@ -1,93 +1,252 @@
-fetch("http://127.0.0.1:8000/analytics/revenue-analysis")
+// ==========================================
+// ShopSense Business Intelligence Dashboard
+// ==========================================
 
-.then(res=>res.json())
 
-.then(data=>{
+// ==========================================
+// 1. REVENUE ANALYSIS
+// ==========================================
 
-document.getElementById("revenue").innerText=
-"₹"+data.current_month_revenue;
+fetch("http://localhost:8000/analytics/revenue-analysis")
 
-document.getElementById("orders").innerText=
-data.completed_orders;
+.then(res => res.json())
 
-document.getElementById("gmv").innerText=
-"₹"+data.gmv;
+.then(data => {
 
-document.getElementById("growth").innerText=
-data.growth_percentage+"%";
+    document.getElementById("revenue").innerText =
+        "₹" + Number(data.current_month_revenue).toLocaleString("en-IN");
 
-new Chart(document.getElementById("revenueChart"),{
+    document.getElementById("orders").innerText =
+        Number(data.completed_orders).toLocaleString("en-IN");
 
-type:"bar",
+    document.getElementById("gmv").innerText =
+        "₹" + Number(data.gmv).toLocaleString("en-IN");
 
-data:{
+    document.getElementById("growth").innerText =
+        Number(data.growth_percentage).toFixed(2) + "%";
 
-labels:["Current Month","Last Month"],
 
-datasets:[{
+    new Chart(document.getElementById("revenueChart"), {
 
-label:"Revenue",
+        type: "bar",
 
-data:[
-data.current_month_revenue,
-data.last_month_revenue
-]
+        data: {
 
-}]
+            labels: [
+                "Current Month",
+                "Last Month"
+            ],
 
-},
+            datasets: [{
 
-options:{
+                label: "Revenue (₹)",
 
-responsive:true,
+                data: [
+                    data.current_month_revenue,
+                    data.last_month_revenue
+                ]
 
-maintainAspectRatio:false
+            }]
 
-}
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false
+
+        }
+
+    });
+
+})
+
+.catch(error => {
+
+    console.error("Revenue API Error:", error);
+
+});
+
+
+// ==========================================
+// 2. MARKETPLACE OVERVIEW
+// ==========================================
+
+fetch("http://localhost:8000/analytics/marketplace")
+
+.then(res => res.json())
+
+.then(data => {
+
+    new Chart(document.getElementById("marketChart"), {
+
+        type: "pie",
+
+        data: {
+
+            labels: [
+                "Customers",
+                "Vendors",
+                "Products",
+                "Orders"
+            ],
+
+            datasets: [{
+
+                data: [
+                    data.customers,
+                    data.vendors,
+                    data.products,
+                    data.orders
+                ]
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false
+
+        }
+
+    });
+
+})
+
+.catch(error => {
+
+    console.error("Marketplace API Error:", error);
 
 });
 
+
+// ==========================================
+// 3. VENDOR PERFORMANCE
+// ==========================================
+
+fetch("http://localhost:8000/analytics/vendor-performance")
+
+.then(res => res.json())
+
+.then(data => {
+
+    const vendorNames =
+        data.map(vendor => vendor.business_name);
+
+    const vendorRevenue =
+        data.map(vendor => vendor.revenue);
+
+
+    new Chart(document.getElementById("vendorChart"), {
+
+        type: "bar",
+
+        data: {
+
+            labels: vendorNames,
+
+            datasets: [{
+
+                label: "Revenue (₹)",
+
+                data: vendorRevenue
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: true
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true
+
+                }
+
+            }
+
+        }
+
+    });
+
+})
+
+.catch(error => {
+
+    console.error("Vendor Performance API Error:", error);
+
 });
-fetch("http://127.0.0.1:8000/analytics/marketplace")
 
-.then(res=>res.json())
 
-.then(data=>{
+// ==========================================
+// 4. CUSTOMER & ORDER INSIGHTS
+// ==========================================
 
-new Chart(document.getElementById("marketChart"),{
+fetch("http://localhost:8000/analytics/customer-insights")
 
-type:"pie",
+.then(res => res.json())
 
-data:{
+.then(data => {
 
-labels:[
-"Customers",
-"Vendors",
-"Products",
-"Orders"
-],
+    new Chart(document.getElementById("customerChart"), {
 
-datasets:[{
+        type: "doughnut",
 
-data:[
-data.customers,
-data.vendors,
-data.products,
-data.orders
-]
+        data: {
 
-}]
+            labels: [
+                "Completed Orders",
+                "Pending Orders"
+            ],
 
-},
+            datasets: [{
 
-options:{
+                data: [
+                    data.completed_orders,
+                    data.pending_orders
+                ]
 
-responsive:true,
+            }]
 
-maintainAspectRatio:false
+        },
 
-}
+        options: {
 
-});
+            responsive: true,
+
+            maintainAspectRatio: false
+
+        }
+
+    });
+
+
+    console.log("Customer Insights:", data);
+
+})
+
+.catch(error => {
+
+    console.error("Customer Insights API Error:", error);
 
 });

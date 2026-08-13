@@ -1,113 +1,172 @@
-fetch("http://127.0.0.1:8000/analytics/model-registry")
+fetch("http://localhost:8000/analytics/model-registry")
+    .then(response => response.json())
+    .then(data => {
 
-.then(response => response.json())
+        console.log("ML Model Registry:", data);
 
-.then(data=>{
+        // =========================
+        // Basic Model Information
+        // =========================
 
-document.getElementById("modelName").innerText=data.model_name;
+        document.getElementById("modelName").innerText =
+            data.model_name;
 
-document.getElementById("algorithm").innerText=data.algorithm;
+        document.getElementById("algorithm").innerText =
+            data.algorithm;
 
-document.getElementById("accuracy").innerText=data.accuracy+"%";
+        document.getElementById("status").innerText =
+            data.status;
 
-document.getElementById("status").innerText=data.status;
+        document.getElementById("version").innerText =
+            data.version;
 
-document.getElementById("version").innerText=data.version;
+        // =========================
+        // ML Training Information
+        // =========================
 
-document.getElementById("dataset").innerText=data.dataset;
+        document.getElementById("experiment").innerText =
+            data.experiment;
 
+        document.getElementById("productsTrained").innerText =
+            data.products_trained;
 
+        document.getElementById("averageMae").innerText =
+            data.average_mae;
 
-new Chart(
+        document.getElementById("trainingDays").innerText =
+            data.training_days + " Days";
 
-document.getElementById("accuracyChart"),
+        document.getElementById("forecastDays").innerText =
+            data.forecast_days + " Days";
 
-{
+        document.getElementById("dataset").innerText =
+            data.dataset;
 
-type:"doughnut",
+        // =========================
+        // Accuracy Chart
+        // =========================
 
-data:{
+        new Chart(
+            document.getElementById("accuracyChart"),
+            {
+                type: "doughnut",
 
-labels:["Accuracy","Remaining"],
+                data: {
+                    labels: [
+                        "Accuracy",
+                        "Remaining"
+                    ],
 
-datasets:[{
+                    datasets: [{
+                        data: [
+                            data.accuracy,
+                            100 - data.accuracy
+                        ]
+                    }]
+                },
 
-data:[data.accuracy,100-data.accuracy]
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            }
+        );
 
-}]
+        // =========================
+        // Pipeline Chart
+        // =========================
 
-},
+        const pipelineCanvas = document.getElementById("pipelineChart");
 
-options:{
+if (pipelineCanvas) {
 
-responsive:true,
+    new Chart(pipelineCanvas, {
+        type: "bar",
 
-maintainAspectRatio:false
+        data: {
+            labels: [
+                "Data Collection",
+                "Data Cleaning",
+                "Model Training",
+                "Model Evaluation",
+                "Deployment"
+            ],
+
+            datasets: [{
+                label: "Completion (%)",
+                data: [100, 100, 100, 100, 100]
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+
+                    ticks: {
+                        callback: function(value) {
+                            return value + "%";
+                        }
+                    }
+                }
+            },
+
+            plugins: {
+                legend: {
+                    display: true
+                },
+
+                title: {
+                    display: true,
+                    text: "ShopSense Analytical Workflow"
+                }
+            }
+        }
+    });
 
 }
 
-}
+        // =========================
+        // Trained Products
+        // =========================
 
-);
+        const list =
+            document.getElementById("mlProductList");
 
+        list.innerHTML = "";
 
+        const products = [
+            "Dell Inspiron",
+            "Realme P4 Pro 5G Smartphone",
+            "Men T-Shirt",
+            "Sunflower Oil",
+            "Samsung Galaxy S24",
+            "Rice Bag 25kg",
+            "iPhone 15"
+        ];
 
-new Chart(
+        products.forEach(product => {
 
-document.getElementById("pipelineChart"),
+            const li =
+                document.createElement("li");
 
-{
+            li.innerText = "✅ " + product;
 
-type:"bar",
+            list.appendChild(li);
 
-data:{
+        });
 
-labels:[
+    })
 
-"Collection",
+    .catch(error => {
 
-"Cleaning",
+        console.error(
+            "Model Registry Error:",
+            error
+        );
 
-"Training",
-
-"Evaluation",
-
-"Deployment"
-
-],
-
-datasets:[{
-
-label:"Completion",
-
-data:[100,100,100,100,100]
-
-}]
-
-},
-
-options:{
-
-responsive:true,
-
-maintainAspectRatio:false,
-
-scales:{
-
-y:{
-
-beginAtZero:true,
-
-max:100
-
-}
-
-}
-
-}
-
-}
-
-);
-
-});
+    });

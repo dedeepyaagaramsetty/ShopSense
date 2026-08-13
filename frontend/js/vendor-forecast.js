@@ -1,6 +1,6 @@
 const vendorId = localStorage.getItem("vendorId");
 
-fetch(`http://127.0.0.1:8000/vendors/${vendorId}/forecast`)
+fetch(`http://localhost:8000/vendors/${vendorId}/forecast`)
 .then(response => response.json())
 .then(data => {
 
@@ -159,6 +159,83 @@ ${product.restock_needed ? "Yes" : "No"}
     });
 
 });
+
+function loadMLSummary() {
+
+    fetch("http://localhost:8000/ml/forecast-summary")
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            console.log("ML Summary:", data);
+
+            document.getElementById("mlStatus").innerText =
+                data.status === "Trained"
+                    ? "✅ Enabled & Trained"
+                    : "⚠ " + data.status;
+
+            document.getElementById("mlProducts").innerText =
+                data.products_trained;
+
+            document.getElementById("mlMae").innerText =
+                data.average_mae;
+
+            document.getElementById("mlHorizon").innerText =
+                data.forecast_days + " Days";
+
+            document.getElementById("mlExperiment").innerText =
+                data.experiment;
+
+            document.getElementById("mlModel").innerText =
+                data.model;
+
+            document.getElementById("mlTrainingDays").innerText =
+                data.training_days + " Days";
+
+
+            const list =
+                document.getElementById("mlProductList");
+
+            list.innerHTML = "";
+
+            if (data.products && data.products.length > 0) {
+
+                data.products.forEach(product => {
+
+                    const li =
+                        document.createElement("li");
+
+                    li.innerText = product;
+
+                    list.appendChild(li);
+
+                });
+
+            } else {
+
+                list.innerHTML =
+                    "<li>No products trained yet</li>";
+
+            }
+
+        })
+
+        .catch(error => {
+
+            console.error(
+                "ML summary error:",
+                error
+            );
+
+            document.getElementById("mlStatus").innerText =
+                "❌ ML data unavailable";
+
+        });
+
+}
+
+loadMLSummary();
 function logout(){
 
     localStorage.clear();

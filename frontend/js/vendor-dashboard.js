@@ -1,8 +1,8 @@
 console.log("HELLO FROM VENDOR DASHBOARD");
 const vendorId = localStorage.getItem("vendorId");
-
+loadVendorNotifications();
 // Load Dashboard Details
-fetch(`http://127.0.0.1:8000/vendors/${vendorId}/dashboard`)
+fetch(`http://localhost:8000/vendors/${vendorId}/dashboard`)
 .then(response => response.json())
 .then(data => {
     document.getElementById("vendorId").innerText =
@@ -103,7 +103,7 @@ loadProducts();
 
 function loadProducts(){
 
-    fetch(`http://127.0.0.1:8000/products/vendor/${vendorId}`)
+    fetch(`http://localhost:8000/products/vendor/${vendorId}`)
     .then(response => response.json())
     .then(products => {
 
@@ -162,7 +162,7 @@ function addProduct(){
 
     }
 
-    fetch("http://127.0.0.1:8000/products/add",{
+    fetch("http://localhost:8000/products/add",{
 
         method:"POST",
 
@@ -237,7 +237,7 @@ function editProduct(productId, name, description, price, stock, categoryId){
     const newStock = prompt("Stock:", stock);
     if(newStock === null) return;
 
-    fetch(`http://127.0.0.1:8000/products/update/${productId}`, {
+    fetch(`http://localhost:8000/products/update/${productId}`, {
 
         method: "PUT",
 
@@ -277,7 +277,7 @@ function deleteProduct(productId){
         return;
     }
 
-    fetch(`http://127.0.0.1:8000/products/delete/${productId}`,{
+    fetch(`http://localhost:8000/products/delete/${productId}`,{
 
         method:"DELETE"
 
@@ -308,5 +308,82 @@ function logout(){
     localStorage.clear();
 
     window.location.href="index.html";
+
+}
+function loadVendorNotifications(){
+
+    fetch(
+        `http://localhost:8000/notifications/vendor/${vendorId}`
+    )
+
+    .then(response => response.json())
+
+    .then(notifications => {
+
+        const list =
+            document.getElementById(
+                "vendorNotificationList"
+            );
+
+        const count =
+            document.getElementById(
+                "vendorNotificationCount"
+            );
+
+        count.innerText =
+            notifications.length;
+
+        list.innerHTML = "";
+
+        if(notifications.length === 0){
+
+            list.innerHTML =
+                "<p>No notifications</p>";
+
+            return;
+        }
+
+        notifications.forEach(notification => {
+
+            list.innerHTML += `
+
+                <div class="notification-item">
+
+                    <p>
+                        ${notification.message}
+                    </p>
+
+                    <small>
+                        ${notification.created_at}
+                    </small>
+
+                </div>
+
+            `;
+
+        });
+
+    });
+
+}
+
+
+function toggleVendorNotifications(){
+
+    const panel =
+        document.getElementById(
+            "vendorNotificationPanel"
+        );
+
+    if(panel.style.display === "block"){
+
+        panel.style.display = "none";
+
+    }
+    else{
+
+        panel.style.display = "block";
+
+    }
 
 }

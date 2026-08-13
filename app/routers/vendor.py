@@ -368,3 +368,42 @@ def vendor_forecast(vendor_id: int, db: Session = Depends(get_db)):
         "forecast": forecast
 
     }
+@router.put("/{vendor_id}/profile")
+def update_vendor_profile(
+    vendor_id: int,
+    data: dict,
+    db: Session = Depends(get_db)
+):
+
+    vendor = db.query(Vendor).filter(
+        Vendor.id == vendor_id
+    ).first()
+
+    if not vendor:
+        raise HTTPException(
+            status_code=404,
+            detail="Vendor not found"
+        )
+
+    if "business_name" in data:
+        vendor.business_name = data["business_name"]
+
+    if "owner_name" in data:
+        vendor.owner_name = data["owner_name"]
+
+    if "email" in data:
+        vendor.email = data["email"]
+
+    if "phone" in data:
+        vendor.phone = data["phone"]
+
+    if "password" in data:
+        vendor.password = data["password"]
+
+    db.commit()
+
+    db.refresh(vendor)
+
+    return {
+        "message": "Profile updated successfully"
+    }

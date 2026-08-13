@@ -15,6 +15,7 @@ from app.schemas.customer import CustomerLogin
 from app.models.order import Order
 from app.models.customer import Customer
 from sqlalchemy import func
+from app.models.notification import Notification
 from app.schemas.customer import (
     CustomerCreate,
     CustomerLogin,
@@ -173,8 +174,27 @@ def customer_dashboard(customer_id: int, db: Session = Depends(get_db)):
 def buy_product(
     customer_id: int,
     product_id: int,
+    order_data: dict,
     db: Session = Depends(get_db)
 ):
+
+    # -----------------------------
+    # Check customer
+    # -----------------------------
+
+    customer = db.query(Customer).filter(
+        Customer.id == customer_id
+    ).first()
+
+    if not customer:
+        raise HTTPException(
+            status_code=404,
+            detail="Customer not found"
+        )
+
+    # -----------------------------
+    # Check product
+    # -----------------------------
 
     product = db.query(Product).filter(
         Product.id == product_id
@@ -186,41 +206,212 @@ def buy_product(
             detail="Product not found"
         )
 
-    if product.stock <= 0:
+    # -----------------------------
+    # Check stock
+    # -----------------------------
+
+    quantity = order_data.get("quantity", 1)
+
+    if quantity <= 0:
         raise HTTPException(
             status_code=400,
-            detail="Product Out of Stock"
+            detail="Invalid quantity"
         )
 
+    if product.stock < quantity:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Only {product.stock} items available"
+        )
+
+    # -----------------------------
+    # Get order information
+    # -----------------------------
+
+    address = order_data.get(
+        "address",
+        customer.address
+    )
+
+    payment_method = order_data.get(
+        "payment_method"
+    )
+
+    if not payment_method:
+        raise HTTPException(
+            status_code=400,
+            detail="Payment method is required"
+        )
+
+    # -----------------------------
+    # Calculate total
+    # -----------------------------
+
+    total_amount = product.price * quantity
+
+    # -----------------------------
     # Create Order
+    # -----------------------------
+
     order = Order(
+
         customer_id=customer_id,
-        total_amount=product.price,
+
+        total_amount=total_amount,
+
         status="Completed",
+
+        payment_method=payment_method,
+
+        payment_status="Paid",
+
+        delivery_status="Processing",
+
+        address=address,
+
         order_date=datetime.utcnow()
+
     )
 
     db.add(order)
+
     db.commit()
+
     db.refresh(order)
 
+    # -----------------------------
     # Create Order Item
+    # -----------------------------
+
     order_item = OrderItem(
+
         order_id=order.id,
+
         product_id=product.id,
-        quantity=1,
+
+        quantity=quantity,
+
         price=product.price
+
     )
 
     db.add(order_item)
 
-    # Reduce Stock
-    product.stock -= 1
+    # -----------------------------
+    # Reduce stock
+    # -----------------------------
+
+    product.stock -= quantity
 
     db.commit()
 
     return {
-        "message": "Order Placed Successfully"
+
+        "message": "Payment successful! Order placed successfully.",
+
+        "order_id": order.id,
+
+        "product": product.name,
+
+        "quantity": quantity,
+
+        "amount": total_amount,
+
+        "payment_method": payment_method,
+
+        "payment_status": "Paid",
+
+        "delivery_status": "Processing"
+
+    }
+@router.post("/{customer_id}/orders/{order_id}/pay")
+def pay_for_order(
+    customer_id: int,
+    order_id: int,
+    db: Session = Depends(get_db)
+):
+
+    order = db.query(Order).filter(
+        Order.id == order_id,
+        Order.customer_id == customer_id
+    ).first()
+
+    if not order:
+        raise HTTPException(
+            status_code=404,
+            detail="Order not found"
+        )
+
+    if order.payment_status == "Paid":
+        return {
+            "message": "Payment already completed"
+        }
+
+    order.payment_status = "Paid"
+    order.status = "Completed"
+    item = db.query(OrderItem).filter(
+    OrderItem.order_id == order.id
+).first()
+
+    product = None
+
+    if item:
+        product = db.query(Product).filter(
+        Product.id == item.product_id
+    ).first()
+
+    customer_notification = Notification(
+    user_type="customer",
+    user_id=customer_id,
+    message=f"Payment completed successfully for Order #{order.id}."
+    )
+
+    db.add(customer_notification)
+
+    if product:
+
+        vendor_notification = Notification(
+        user_type="vendor",
+        user_id=product.vendor_id,
+        message=f"Payment completed for Order #{order.id}."
+    )
+
+    db.add(vendor_notification)
+
+    db.commit()
+
+    return {
+        "message": "UPI Payment Successful",
+        "order_id": order.id,
+        "payment_status": order.payment_status,
+        "order_status": order.status
+    }
+@router.put("/{customer_id}/orders/{order_id}/deliver")
+def deliver_order(
+    customer_id: int,
+    order_id: int,
+    db: Session = Depends(get_db)
+):
+
+    order = db.query(Order).filter(
+        Order.id == order_id,
+        Order.customer_id == customer_id
+    ).first()
+
+    if not order:
+        raise HTTPException(
+            status_code=404,
+            detail="Order not found"
+        )
+
+    order.delivery_status = "Delivered"
+
+    db.commit()
+
+    return {
+        "message": "Order Delivered Successfully",
+        "order_id": order.id,
+        "delivery_status": order.delivery_status
     }
 @router.get("/{customer_id}/orders")
 def customer_orders(
@@ -248,19 +439,25 @@ def customer_orders(
 
             data.append({
 
-                "order_id": order.id,
+    "order_id": order.id,
 
-                "product": product.name,
+    "product": product.name,
 
-                "quantity": item.quantity,
+    "quantity": item.quantity,
 
-                "amount": item.price * item.quantity,
+    "amount": item.price * item.quantity,
 
-                "status": order.status,
+    "status": order.status,
 
-                "date": order.order_date.strftime("%d-%m-%Y")
+    "payment_status": order.payment_status,
 
-            })
+    "delivery_status": order.delivery_status,
+
+    "address": order.address,
+
+    "date": order.order_date.strftime("%d-%m-%Y")
+
+})
 
     return data
 @router.post("/{customer_id}/wishlist/{product_id}")
@@ -401,3 +598,42 @@ def recommend_products(
             recommendations = db.query(Product).limit(6).all()
 
     return recommendations
+@router.put("/{customer_id}/profile")
+def update_customer_profile(
+    customer_id: int,
+    data: dict,
+    db: Session = Depends(get_db)
+):
+
+    customer = db.query(Customer).filter(
+        Customer.id == customer_id
+    ).first()
+
+    if not customer:
+        raise HTTPException(
+            status_code=404,
+            detail="Customer not found"
+        )
+
+    if "full_name" in data:
+        customer.full_name = data["full_name"]
+
+    if "email" in data:
+        customer.email = data["email"]
+
+    if "phone" in data:
+        customer.phone = data["phone"]
+
+    if "address" in data:
+        customer.address = data["address"]
+
+    if "password" in data:
+        customer.password = data["password"]
+
+    db.commit()
+
+    db.refresh(customer)
+
+    return {
+        "message": "Profile updated successfully"
+    }

@@ -29,82 +29,122 @@
 
 </div>
 
-<h1>🤖 ML Model Registry</h1>
-
-<div class="dashboard">
-
 <div class="card">
 
-<h2>Model</h2>
+    <h2>🤖 ML Model Registry</h2>
 
-<p id="modelName"></p>
+    <div class="dashboard">
 
-</div>
+        <div class="card">
+            <h3>Model</h3>
+            <p id="modelName">Loading...</p>
+        </div>
 
-<div class="card">
+        <div class="card">
+            <h3>Algorithm</h3>
+            <p id="algorithm">Loading...</p>
+        </div>
 
-<h2>Algorithm</h2>
+        <div class="card">
+            <h3>Status</h3>
+            <p id="status">Loading...</p>
+        </div>
 
-<p id="algorithm"></p>
+        <div class="card">
+            <h3>Version</h3>
+            <p id="version">Loading...</p>
+        </div>
 
-</div>
-
-<div class="card">
-
-<h2>Accuracy</h2>
-
-<p id="accuracy"></p>
-
-</div>
-
-<div class="card">
-
-<h2>Status</h2>
-
-<p id="status"></p>
-
-</div>
-
-<div class="card">
-
-<h2>Version</h2>
-
-<p id="version"></p>
-
-</div>
-
-<div class="card">
-
-<h2>Dataset</h2>
-
-<p id="dataset"></p>
-
-</div>
+    </div>
 
 </div>
 
 <br>
 
-<div class="card chart-card">
+<div class="card">
 
-<h2>Forecast Accuracy</h2>
+    <h2>📊 ML Training Information</h2>
 
-<canvas id="accuracyChart"></canvas>
+    <table border="1" cellpadding="10" width="100%">
+
+        <tr>
+            <th>Experiment</th>
+            <td id="experiment">Loading...</td>
+        </tr>
+
+        <tr>
+            <th>Products Trained</th>
+            <td id="productsTrained">0</td>
+        </tr>
+
+        <tr>
+            <th>Average MAE</th>
+            <td id="averageMae">0</td>
+        </tr>
+
+        <tr>
+            <th>Training Period</th>
+            <td id="trainingDays">0 Days</td>
+        </tr>
+
+        <tr>
+            <th>Forecast Horizon</th>
+            <td id="forecastDays">0 Days</td>
+        </tr>
+
+        <tr>
+            <th>Dataset</th>
+            <td id="dataset">Loading...</td>
+        </tr>
+
+    </table>
 
 </div>
 
 <br>
 
-<div class="card chart-card">
+<div class="charts-row">
 
-<h2>Pipeline Completion</h2>
+    <div class="card chart-card">
 
-<canvas id="pipelineChart"></canvas>
+        <h2>🎯 Forecast Accuracy</h2>
+
+        <canvas id="accuracyChart"></canvas>
+
+    </div>
+
+    <div class="card chart-card">
+
+        <h2>⚙ Analytical Pipeline</h2>
+        <div style="height: 350px; position: relative;">
+
+
+        <canvas id="pipelineChart"></canvas>
+
+    </div>
 
 </div>
 
+<br>
+
+<div class="card">
+
+    <h2>🧠 Products Used for Training</h2>
+
+    <ul id="mlProductList">
+        <li>Loading...</li>
+    </ul>
+
+</div>
+<br>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/model-registry.js"></script>
 </body>
 
-<script src="js/model-registry.js"></script>
+
 
 </html>

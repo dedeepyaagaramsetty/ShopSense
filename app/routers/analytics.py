@@ -202,19 +202,27 @@ def revenue_analysis(db: Session = Depends(get_db)):
 def model_registry():
 
     return {
-
         "model_name": "Inventory Forecast v1",
-
         "algorithm": "Linear Regression",
+        "experiment": "ShopSense Inventory Forecasting",
+
+        "products_trained": 7,
+        "average_mae": 0.193,
+
+        "training_days": 30,
+        "forecast_days": 7,
+
+        "accuracy": 82,
+        "version": "v1.0",
+        "status": "Production",
 
         "dataset": "ShopSense Transactions Dataset",
 
-        "accuracy": 82,
-
-        "version": "v1.0",
-
-        "status": "Production",
-
-        "registered_on": "31-Jul-2026"
-
+        "pipeline": {
+            "data_collection": 100,
+            "data_cleaning": 100,
+            "model_training": 100,
+            "evaluation": 100,
+            "deployment": 100
+        }
     }

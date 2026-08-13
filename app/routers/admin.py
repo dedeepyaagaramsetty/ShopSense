@@ -18,10 +18,12 @@ router = APIRouter(
 
 @router.post("/login")
 def login(admin: AdminLogin, db: Session = Depends(get_db)):
+    print("LOGIN EMAIL RECEIVED:", repr(admin.email))
 
     existing_admin = db.query(Admin).filter(
         Admin.email == admin.email
     ).first()
+    print("ADMIN FOUND:", existing_admin)
 
     if not existing_admin:
         raise HTTPException(

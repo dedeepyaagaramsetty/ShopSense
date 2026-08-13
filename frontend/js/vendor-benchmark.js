@@ -1,4 +1,4 @@
-fetch("http://127.0.0.1:8000/analytics/vendor-performance")
+fetch("http://localhost:8000/analytics/vendor-performance")
 
 .then(response => response.json())
 

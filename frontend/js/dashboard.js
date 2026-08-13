@@ -1,6 +1,7 @@
 // Dashboard Statistics
-
-fetch("http://127.0.0.1:8000/admin/dashboard")
+console.log("🔥 ADMIN DASHBOARD JS LOADED");
+console.log("🚀 Starting dashboard API calls...");
+fetch("http://localhost:8000/admin/dashboard")
 .then(response => response.json())
 .then(data => {
 
@@ -22,7 +23,7 @@ fetch("http://127.0.0.1:8000/admin/dashboard")
 
 // Marketplace Reports
 
-fetch("http://127.0.0.1:8000/admin/reports")
+fetch("http://localhost:8000/admin/reports")
 .then(response => response.json())
 .then(data => {
 
@@ -38,7 +39,7 @@ fetch("http://127.0.0.1:8000/admin/reports")
 // Analytics
 // ============================
 
-fetch("http://127.0.0.1:8000/admin/analytics")
+fetch("http://localhost:8000/admin/analytics")
 .then(response => response.json())
 .then(data => {
 

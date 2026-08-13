@@ -1,6 +1,6 @@
 const vendorId = localStorage.getItem("vendorId");
 
-fetch(`http://127.0.0.1:8000/vendors/${vendorId}/inventory`)
+fetch(`http://localhost:8000/vendors/${vendorId}/inventory`)
 .then(response => response.json())
 .then(data => {
 
