@@ -15,7 +15,7 @@ jobs:
         image: postgres:16
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: "06290727"
+          POSTGRES_PASSWORD: 06290727
           POSTGRES_DB: shopsense_db
         ports:
           - 5432:5432
@@ -24,9 +24,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
-    env:
-      DATABASE_URL: postgresql://postgres:06290727@localhost:5432/shopsense_db
 
     steps:
       - name: Checkout repository
@@ -41,11 +38,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest httpx2 locust
+          pip install pytest pytest-timeout httpx2 locust
 
       - name: Run tests
+        env:
+          DATABASE_URL: postgresql://postgres:06290727@localhost:5432/shopsense_db
         run: |
-          pytest -v
+          pytest -v --timeout=30
 
       - name: Build Docker image
         run: |
