@@ -15,7 +15,7 @@ jobs:
         image: postgres:16
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: 06290727
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: shopsense_db
         ports:
           - 5432:5432
@@ -42,7 +42,7 @@ jobs:
 
       - name: Run tests
         env:
-          DATABASE_URL: postgresql://postgres:06290727@localhost:5432/shopsense_db
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/shopsense_db
         run: |
           pytest -v --timeout=30
 
